@@ -7,18 +7,22 @@ CONFIG_FILE="${CYBERDECK_HOME:-$HOME/cyberdeck}/config/cyberdeck.conf"
 [[ -f "$CONFIG_FILE" ]] && source "$CONFIG_FILE"
 
 # Color codes for logging
-readonly RED='\033[0;31m'
-readonly YELLOW='\033[1;33m'
-readonly GREEN='\033[0;32m'
-readonly BLUE='\033[0;34m'
-readonly NC='\033[0m' # No Color
+if [[ -z "${RED:-}" ]]; then
+    readonly RED='\033[0;31m'
+    readonly YELLOW='\033[1;33m'
+    readonly GREEN='\033[0;32m'
+    readonly BLUE='\033[0;34m'
+    readonly NC='\033[0m' # No Color
+fi
 
 # Logging levels
-readonly LOG_DEBUG=0
-readonly LOG_INFO=1
-readonly LOG_WARN=2
-readonly LOG_ERROR=3
-readonly LOG_CRITICAL=4
+if [[ -z "${LOG_DEBUG+x}" ]]; then
+    readonly LOG_DEBUG=0
+    readonly LOG_INFO=1
+    readonly LOG_WARN=2
+    readonly LOG_ERROR=3
+    readonly LOG_CRITICAL=4
+fi
 
 # Default log level
 LOG_LEVEL=${LOG_LEVEL:-$LOG_INFO}
@@ -223,9 +227,11 @@ send_to_pipe() {
 get_db_path() {
     echo "${CYBERDECK_HOME:-$HOME/cyberdeck}/config/threats.db"
 }
-DB_PATH=$(get_db_path)
-export DB_PATH
-readonly DB_PATH
+if [[ -z "${DB_PATH:-}" ]]; then
+    DB_PATH=$(get_db_path)
+    export DB_PATH
+    readonly DB_PATH
+fi
 
 # Execute SQL safely
 exec_sql() {
