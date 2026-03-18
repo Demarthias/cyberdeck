@@ -20,20 +20,14 @@ Cyberdeck runs as a set of background daemons that continuously monitor your net
 ## Quick Start
 
 ```bash
-# Clone the repo
 git clone https://github.com/Demarthias/cyberdeck.git
-cd cyberdeck
+bash cyberdeck/setup.sh
+```
 
-# Extract the production release
-tar -xzf cyberdeck/cyberdeck-production.tar.gz
+Then:
 
-# Initialize
-cd cyberdeck
-bash config/init_db.sh
-bash validate.sh
-
-# Start
-bash supervisor.sh start
+```bash
+bash ~/cyberdeck/start.sh
 ```
 
 ## Requirements
